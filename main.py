@@ -1,16 +1,24 @@
+#!/usr/bin/env python
+# coding: utf8
+
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.touch_actions import TouchActions
 # from selenium.webdriver.common.exceptions.NoSuchElementException import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-
 import time
+from pyvirtualdisplay import Display
+
+# Start virtual display
+display = Display(visible=0, size=(1920, 1080))  
+display.start()
 
 chrome_options = Options()
 # chrome_options.add_argument("--disable-extensions")
-# chrome_options.add_argument("--disable-gpu") 
-# chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu") 
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--window-size=1920,1080")
 
 def check_general(url, 
     availability_text, 
@@ -71,11 +79,13 @@ def check_general(url,
     return result
 
 # Amazon
+print("Checking amazon...")
 avail_amazon = not check_general(
     url="https://www.amazon.de/Nintendo-Switch-Konsole-Grau-2019/dp/B07W13KJZC",
     availability_text="diesen Anbietern")
 
 # Media Markt
+print("Checking Media Markt...")
 avail_mm = not check_general(
     url="https://www.mediamarkt.de/de/product/_switch-grau-neue-edition-nintendo-switch-konsolen-2584584.html",
     availability_text="Online leider nicht mehr verfügbar",
@@ -85,6 +95,7 @@ avail_mm = not check_general(
     cart_url="https://www.mediamarkt.de/checkout")
 
 # Saturn
+print("Checking Saturn...")
 avail_saturn = not check_general(
     url="https://www.saturn.de/de/product/_nintendo-switch-grau-neue-edition-2584584.html",
     availability_text="Eine Lieferung ist nicht möglich, da der Artikel online ausverkauft ist",
@@ -93,6 +104,7 @@ avail_saturn = not check_general(
     cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3")
 
 # Lidl
+print("Checking LIDL...")
 avail_lidl = not check_general(
     url="https://www.lidl.de/de/nintendo-switch-konsole-grau/p311460",
     availability_text="Dieser Artikel ist demnächst für Sie verfügbar",
@@ -100,11 +112,13 @@ avail_lidl = not check_general(
     button_search_value="cookie-alert-extended-button")
 
 # Otto
+print("Checking Otto...")
 avail_otto = not check_general(
     url="https://www.otto.de/p/nintendo-switch-neues-modell-959859613/#variationId=959859614",
     availability_text="lieferbar Ende Juni")
 
 # Conrad
+print("Checking Conrad...")
 avail_conrad = not check_general(
     url="https://www.conrad.de/de/p/switch-konsole-grau-v2-2019-2163187.html",
     availability_text="Der gewünschte Artikel ist leider nicht verfügbar")

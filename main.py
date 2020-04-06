@@ -44,13 +44,15 @@ def check_general(url,
             button = driver.find_element_by_id(button_search_value)            
 
         if scroll_down:
-            actions = ActionChains(driver)
-            actions.move_to_element(button)
-            for i in range(10):
-                actions.key_down(Keys.DOWN)
+            driver.execute_script("arguments[0].scrollIntoView()", button); 
 
-            actions.perform()
-            time.sleep(5)
+            # actions = ActionChains(driver)
+            # actions.move_to_element(button)
+            # for i in range(10):
+            #     actions.key_down(Keys.DOWN)
+
+            # actions.perform()
+            # time.sleep(5)
 
         button.click()
         time.sleep(5)

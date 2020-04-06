@@ -10,14 +10,16 @@ from selenium.webdriver.common.keys import Keys
 import time
 from pyvirtualdisplay import Display
 
+check_positive = False
+
 # Start virtual display
-display = Display(visible=0, size=(1920, 1080))  
+display = Display(visible=1, size=(1920, 1080))  
 display.start()
 
 chrome_options = Options()
 #chrome_options.add_argument("--disable-extensions")
 chrome_options.add_argument("--disable-gpu") 
-chrome_options.add_argument("--headless")
+#chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920,1080")
 
 def check_general(url, 
@@ -146,44 +148,55 @@ avail_conrad = not check_general(
 
 # Amazon
 avail_amazon_positive = True
-#avail_amazon_positive = not check_general(
-#    url="https://www.amazon.de/Dr-Kawashimas-Gehirn-Jogging-Nintendo-Switch/dp/B07Z52WCLL",
-#    availability_text="diesen Anbietern")
+if check_positive:
+    avail_amazon_positive = not check_general(
+        url="https://www.amazon.de/Dr-Kawashimas-Gehirn-Jogging-Nintendo-Switch/dp/B07Z52WCLL",
+        availability_text="diesen Anbietern")
 
 # # Media Markt
-avail_mm_positive = not check_general(
-    url="https://www.mediamarkt.de/de/product/_sandisk-ultra%C2%AE-microsdxc%E2%84%A2-uhs-i-2317003.html",
-    availability_text="Online leider nicht mehr verfügbar",
-    button_search_criterion='class', 
-    button_search_value="IRVNX",
-    scroll_down=True,
-    cart_url="https://www.mediamarkt.de/checkout")
+avail_mm_positive = True
+if check_positive:
+    avail_mm_positive = not check_general(
+        url="https://www.mediamarkt.de/de/product/_sandisk-ultra%C2%AE-microsdxc%E2%84%A2-uhs-i-2317003.html",
+        availability_text="Online leider nicht mehr verfügbar",
+        button_search_criterion='class', 
+        button_search_value="IRVNX",
+        scroll_down=True,
+        cart_url="https://www.mediamarkt.de/checkout")
 
 # # Saturn
-avail_saturn_positive = not check_general(
-    url="https://www.saturn.de/de/product/_animal-crossing-new-horizons-simulation-2626931.html",
-    availability_text="In ausgewählten Märkten verfügbar"
-    # button_search_criterion='id', 
-    # button_search_value="pdp-add-to-cart",
-    # cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3"
-)
+avail_saturn_positive = True
+if check_positive:
+    avail_saturn_positive = not check_general(
+        url="https://www.saturn.de/de/product/_animal-crossing-new-horizons-simulation-2626931.html",
+        availability_text="In ausgewählten Märkten verfügbar"
+        # button_search_criterion='id', 
+        # button_search_value="pdp-add-to-cart",
+        # cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3"
+    )
 
 # # Lidl
-avail_lidl_positive = not check_general(
-    url="https://www.lidl.de/de/nintendo-dr-kawashimas-gehirn-jogging-nintendo-switch/p319510",
-    availability_text="Dieser Artikel ist demnächst für Sie verfügbar",
-    button_search_criterion='class', 
-    button_search_value="cookie-alert-extended-button")
+avail_lidl_positive = True
+if check_positive:
+    avail_lidl_positive = not check_general(
+        url="https://www.lidl.de/de/nintendo-dr-kawashimas-gehirn-jogging-nintendo-switch/p319510",
+        availability_text="Dieser Artikel ist demnächst für Sie verfügbar",
+        button_search_criterion='class', 
+        button_search_value="cookie-alert-extended-button")
 
 # # Otto
-avail_otto_positive = not check_general(
-    url="https://www.otto.de/p/nintendo-switch-lite-967565701/#variationId=967565702",
-    availability_text="lieferbar Ende Juni")
+avail_otto_positive = True
+if check_positive:
+    avail_otto_positive = not check_general(
+        url="https://www.otto.de/p/nintendo-switch-lite-967565701/#variationId=967565702",
+        availability_text="lieferbar Ende Juni")
 
 # Conrad
-avail_conrad_positive = not check_general(
-    url="https://www.conrad.de/de/p/nintendo-switch-konsole-32-gb-tuerkis-2162597.html",
-    availability_text="Der gewünschte Artikel ist leider nicht verfügbar")
+avail_conrad_positive = True
+if check_positive:
+    avail_conrad_positive = not check_general(
+        url="https://www.conrad.de/de/p/nintendo-switch-konsole-32-gb-tuerkis-2162597.html",
+        availability_text="Der gewünschte Artikel ist leider nicht verfügbar")
 
 #print()
 #print("POSITIVE TESTS")
@@ -216,3 +229,5 @@ print_html_for_vendor("Lidl", avail_lidl, avail_lidl_positive)
 print_html_for_vendor("Otto", avail_otto, avail_otto_positive)
 print_html_for_vendor("Conrad", avail_conrad, avail_conrad_positive)
 print_html_footer()
+
+display.stop()

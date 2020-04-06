@@ -41,7 +41,11 @@ def check_general(url,
             button = driver.find_element_by_class_name(button_search_value)
 
         elif button_search_criterion is 'id':
-            button = driver.find_element_by_id(button_search_value)            
+            button = driver.find_element_by_id(button_search_value)
+
+        if button is None:
+            driver.quit()
+            return None
 
         if scroll_down:
             driver.execute_script("arguments[0].scrollIntoView()", button); 

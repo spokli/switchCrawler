@@ -15,7 +15,7 @@ display = Display(visible=0, size=(1920, 1080))
 display.start()
 
 chrome_options = Options()
-# chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--disable-extensions")
 chrome_options.add_argument("--disable-gpu") 
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920,1080")
@@ -85,29 +85,31 @@ def check_general(url,
     return result
 
 # Amazon
-print("Checking amazon...")
-avail_amazon = not check_general(
-    url="https://www.amazon.de/Nintendo-Switch-Konsole-Grau-2019/dp/B07W13KJZC",
-    availability_text="diesen Anbietern")
+# print("Checking amazon...")
+# avail_amazon = not check_general(
+#     url="https://www.amazon.de/Nintendo-Switch-Konsole-Grau-2019/dp/B07W13KJZC",
+#     availability_text="diesen Anbietern")
 
-# Media Markt
-print("Checking Media Markt...")
-avail_mm = not check_general(
-    url="https://www.mediamarkt.de/de/product/_switch-grau-neue-edition-nintendo-switch-konsolen-2584584.html",
-    availability_text="Online leider nicht mehr verfügbar",
-    button_search_criterion='class', 
-    button_search_value="IRVNX",
-    scroll_down=True,
-    cart_url="https://www.mediamarkt.de/checkout")
+# # Media Markt
+# print("Checking Media Markt...")
+# avail_mm = not check_general(
+#     url="https://www.mediamarkt.de/de/product/_switch-grau-neue-edition-nintendo-switch-konsolen-2584584.html",
+#     availability_text="Online leider nicht mehr verfügbar",
+#     button_search_criterion='class', 
+#     button_search_value="IRVNX",
+#     scroll_down=True,
+#     cart_url="https://www.mediamarkt.de/checkout")
 
 # Saturn
 print("Checking Saturn...")
 avail_saturn = not check_general(
     url="https://www.saturn.de/de/product/_nintendo-switch-grau-neue-edition-2584584.html",
-    availability_text="Eine Lieferung ist nicht möglich, da der Artikel online ausverkauft ist",
-    button_search_criterion='id', 
-    button_search_value="pdp-add-to-cart",
-    cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3")
+    availability_text="In ausgewählten Märkten verfügbar",
+    # availability_text="Eine Lieferung ist nicht möglich, da der Artikel online ausverkauft ist",
+    # button_search_criterion='id', 
+    # button_search_value="pdp-add-to-cart",
+    # cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3"
+)
 
 # Lidl
 print("Checking LIDL...")
@@ -160,10 +162,11 @@ avail_mm_positive = not check_general(
 # # Saturn
 avail_saturn_positive = not check_general(
     url="https://www.saturn.de/de/product/_animal-crossing-new-horizons-simulation-2626931.html",
-    availability_text="Eine Lieferung ist nicht möglich, da der Artikel online ausverkauft ist",
-    button_search_criterion='id', 
-    button_search_value="pdp-add-to-cart",
-    cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3")
+    availability_text="In ausgewählten Märkten verfügbar",
+    # button_search_criterion='id', 
+    # button_search_value="pdp-add-to-cart",
+    # cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3"
+)
 
 # # Lidl
 avail_lidl_positive = not check_general(

@@ -15,7 +15,7 @@ display = Display(visible=0, size=(1920, 1080))
 display.start()
 
 chrome_options = Options()
-chrome_options.add_argument("--disable-extensions")
+#chrome_options.add_argument("--disable-extensions")
 chrome_options.add_argument("--disable-gpu") 
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920,1080")
@@ -33,7 +33,7 @@ def check_general(url,
     # Call website
     driver.get(url)
 
-    time.sleep(2)
+    time.sleep(5)
 
     if button_search_criterion is not None:
 
@@ -86,25 +86,25 @@ def check_general(url,
 
 # Amazon
 # print("Checking amazon...")
-# avail_amazon = not check_general(
-#     url="https://www.amazon.de/Nintendo-Switch-Konsole-Grau-2019/dp/B07W13KJZC",
-#     availability_text="diesen Anbietern")
+avail_amazon = not check_general(
+    url="https://www.amazon.de/Nintendo-Switch-Konsole-Grau-2019/dp/B07W13KJZC",
+    availability_text="diesen Anbietern")
 
 # # Media Markt
 # print("Checking Media Markt...")
-# avail_mm = not check_general(
-#     url="https://www.mediamarkt.de/de/product/_switch-grau-neue-edition-nintendo-switch-konsolen-2584584.html",
-#     availability_text="Online leider nicht mehr verfügbar",
-#     button_search_criterion='class', 
-#     button_search_value="IRVNX",
-#     scroll_down=True,
-#     cart_url="https://www.mediamarkt.de/checkout")
+avail_mm = not check_general(
+    url="https://www.mediamarkt.de/de/product/_switch-grau-neue-edition-nintendo-switch-konsolen-2584584.html",
+    availability_text="Online leider nicht mehr verfügbar",
+    button_search_criterion='class', 
+    button_search_value="IRVNX",
+    scroll_down=True,
+    cart_url="https://www.mediamarkt.de/checkout")
 
 # Saturn
-print("Checking Saturn...")
+#print("Checking Saturn...")
 avail_saturn = not check_general(
     url="https://www.saturn.de/de/product/_nintendo-switch-grau-neue-edition-2584584.html",
-    availability_text="In ausgewählten Märkten verfügbar",
+    availability_text="In ausgewählten Märkten verfügbar"
     # availability_text="Eine Lieferung ist nicht möglich, da der Artikel online ausverkauft ist",
     # button_search_criterion='id', 
     # button_search_value="pdp-add-to-cart",
@@ -112,7 +112,7 @@ avail_saturn = not check_general(
 )
 
 # Lidl
-print("Checking LIDL...")
+#print("Checking LIDL...")
 avail_lidl = not check_general(
     url="https://www.lidl.de/de/nintendo-switch-konsole-grau/p311460",
     availability_text="Dieser Artikel ist demnächst für Sie verfügbar",
@@ -120,25 +120,24 @@ avail_lidl = not check_general(
     button_search_value="cookie-alert-extended-button")
 
 # Otto
-print("Checking Otto...")
+#print("Checking Otto...")
 avail_otto = not check_general(
     url="https://www.otto.de/p/nintendo-switch-neues-modell-959859613/#variationId=959859614",
     availability_text="lieferbar Ende Juni")
 
 # Conrad
-print("Checking Conrad...")
+#print("Checking Conrad...")
 avail_conrad = not check_general(
     url="https://www.conrad.de/de/p/switch-konsole-grau-v2-2019-2163187.html",
     availability_text="Der gewünschte Artikel ist leider nicht verfügbar")
 
 
-print("Availabilities:")
-print("Amazon:", avail_amazon)
-print("Media Markt: ", avail_mm)
-print("Saturn: ", avail_saturn)
-print("Lidl: ", avail_lidl)
-print("Otto: ", avail_otto)
-print("Conrad: ", avail_conrad)
+#print("Amazon:", avail_amazon)
+#print("Media Markt: ", avail_mm)
+#print("Saturn: ", avail_saturn)
+#print("Lidl: ", avail_lidl)
+#print("Otto: ", avail_otto)
+#print("Conrad: ", avail_conrad)
 
 
 # # ===========================
@@ -146,9 +145,10 @@ print("Conrad: ", avail_conrad)
 # # ===========================
 
 # Amazon
-avail_amazon_positive = not check_general(
-    url="https://www.amazon.de/Dr-Kawashimas-Gehirn-Jogging-Nintendo-Switch/dp/B07Z52WCLL",
-    availability_text="diesen Anbietern")
+avail_amazon_positive = True
+#avail_amazon_positive = not check_general(
+#    url="https://www.amazon.de/Dr-Kawashimas-Gehirn-Jogging-Nintendo-Switch/dp/B07Z52WCLL",
+#    availability_text="diesen Anbietern")
 
 # # Media Markt
 avail_mm_positive = not check_general(
@@ -162,7 +162,7 @@ avail_mm_positive = not check_general(
 # # Saturn
 avail_saturn_positive = not check_general(
     url="https://www.saturn.de/de/product/_animal-crossing-new-horizons-simulation-2626931.html",
-    availability_text="In ausgewählten Märkten verfügbar",
+    availability_text="In ausgewählten Märkten verfügbar"
     # button_search_criterion='id', 
     # button_search_value="pdp-add-to-cart",
     # cart_url="https://www.saturn.de/webapp/wcs/stores/servlet/MultiChannelDisplayBasket?langId=-3"
@@ -185,16 +185,34 @@ avail_conrad_positive = not check_general(
     url="https://www.conrad.de/de/p/nintendo-switch-konsole-32-gb-tuerkis-2162597.html",
     availability_text="Der gewünschte Artikel ist leider nicht verfügbar")
 
-print()
-print("POSITIVE TESTS")
-print("Amazon:", avail_amazon_positive)
-print("Media Markt: ", avail_mm_positive)
-print("Saturn: ", avail_saturn_positive)
-print("Lidl: ", avail_lidl_positive)
-print("Otto: ", avail_otto_positive)
-print("Conrad: ", avail_conrad_positive)
+#print()
+#print("POSITIVE TESTS")
+#print("Amazon:", avail_amazon_positive)
+#print("Media Markt: ", avail_mm_positive)
+#print("Saturn: ", avail_saturn_positive)
+#print("Lidl: ", avail_lidl_positive)
+#print("Otto: ", avail_otto_positive)
+#print("Conrad: ", avail_conrad_positive)
 
 
 # müller https://www.mueller.de/search/?q=Nintendo+Switch&filter.from_PRICE=7&filter.to_PRICE=379&price_range_changed=false&sortBy=pricedesc
 # expert https://www.expert.de/suche?q=Nintendo+Switch&sort=price_desc
 # euronics https://www.euronics.de/spiele-und-konsolen-film-und-musik/spiele-und-konsolen/nintendo-switch/spielkonsole/
+
+def print_html_header():
+    print("<html><head></head><body>")
+
+def print_html_footer():
+    print("</body></html>")
+
+def print_html_for_vendor(name, avail, test):
+    print("<b>"+name+" </b><p>  "+("unsure" if test is not True else str(avail))+"</p><br>")
+
+print_html_header()
+print_html_for_vendor("Amazon", avail_amazon, avail_amazon_positive)
+print_html_for_vendor("Media Markt", avail_mm, avail_mm_positive)
+print_html_for_vendor("Saturn", avail_saturn, avail_saturn_positive)
+print_html_for_vendor("Lidl", avail_lidl, avail_lidl_positive)
+print_html_for_vendor("Otto", avail_otto, avail_otto_positive)
+print_html_for_vendor("Conrad", avail_conrad, avail_conrad_positive)
+print_html_footer()

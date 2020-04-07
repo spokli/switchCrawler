@@ -7,20 +7,27 @@ from selenium.webdriver.common.touch_actions import TouchActions
 # from selenium.webdriver.common.exceptions.NoSuchElementException import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-import time
+import time, datetime
 from pyvirtualdisplay import Display
 
-check_positive = False
+check_positive = True
 
 # Start virtual display
-display = Display(visible=1, size=(1920, 1080))  
+display = Display(visible=0, size=(1920, 1080))  
 display.start()
 
 chrome_options = Options()
 #chrome_options.add_argument("--disable-extensions")
 chrome_options.add_argument("--disable-gpu") 
-#chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920,1080")
+
+amazon_url = "https://www.amazon.de/Nintendo-Switch-Konsole-Grau-2019/dp/B07W13KJZC"
+mm_url = "https://www.mediamarkt.de/de/product/_switch-grau-neue-edition-nintendo-switch-konsolen-2584584.html"
+saturn_url = "https://www.saturn.de/de/product/_nintendo-switch-grau-neue-edition-2584584.html"
+lidl_url = "https://www.lidl.de/de/nintendo-switch-konsole-grau/p311460"
+otto_url = "https://www.otto.de/p/nintendo-switch-neues-modell-959859613/#variationId=959859614"
+conrad_url = "https://www.conrad.de/de/p/switch-konsole-grau-v2-2019-2163187.html"
 
 def check_general(url, 
     availability_text, 
@@ -30,7 +37,7 @@ def check_general(url,
     cart_url=None):
 
     # Create driver
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome('/home/marco/selenium/chromedriver', options=chrome_options)
     
     # Call website
     driver.get(url)
@@ -86,16 +93,18 @@ def check_general(url,
 
     return result
 
+
+
 # Amazon
 # print("Checking amazon...")
 avail_amazon = not check_general(
-    url="https://www.amazon.de/Nintendo-Switch-Konsole-Grau-2019/dp/B07W13KJZC",
+    url=amazon_url,
     availability_text="diesen Anbietern")
 
 # # Media Markt
 # print("Checking Media Markt...")
 avail_mm = not check_general(
-    url="https://www.mediamarkt.de/de/product/_switch-grau-neue-edition-nintendo-switch-konsolen-2584584.html",
+    url=mm_url,
     availability_text="Online leider nicht mehr verfügbar",
     button_search_criterion='class', 
     button_search_value="IRVNX",
@@ -105,7 +114,7 @@ avail_mm = not check_general(
 # Saturn
 #print("Checking Saturn...")
 avail_saturn = not check_general(
-    url="https://www.saturn.de/de/product/_nintendo-switch-grau-neue-edition-2584584.html",
+    url=saturn_url,
     availability_text="In ausgewählten Märkten verfügbar"
     # availability_text="Eine Lieferung ist nicht möglich, da der Artikel online ausverkauft ist",
     # button_search_criterion='id', 
@@ -116,7 +125,7 @@ avail_saturn = not check_general(
 # Lidl
 #print("Checking LIDL...")
 avail_lidl = not check_general(
-    url="https://www.lidl.de/de/nintendo-switch-konsole-grau/p311460",
+    url=lidl_url,
     availability_text="Dieser Artikel ist demnächst für Sie verfügbar",
     button_search_criterion='class', 
     button_search_value="cookie-alert-extended-button")
@@ -124,13 +133,13 @@ avail_lidl = not check_general(
 # Otto
 #print("Checking Otto...")
 avail_otto = not check_general(
-    url="https://www.otto.de/p/nintendo-switch-neues-modell-959859613/#variationId=959859614",
+    url=otto_url,
     availability_text="lieferbar Ende Juni")
 
 # Conrad
 #print("Checking Conrad...")
 avail_conrad = not check_general(
-    url="https://www.conrad.de/de/p/switch-konsole-grau-v2-2019-2163187.html",
+    url=conrad_url,
     availability_text="Der gewünschte Artikel ist leider nicht verfügbar")
 
 
@@ -213,21 +222,27 @@ if check_positive:
 # euronics https://www.euronics.de/spiele-und-konsolen-film-und-musik/spiele-und-konsolen/nintendo-switch/spielkonsole/
 
 def print_html_header():
-    print("<html><head></head><body>")
+    print("<html><head></head><body><h2>"+ str(datetime.datetime.now()) +"</h2>")
 
 def print_html_footer():
     print("</body></html>")
 
 def print_html_for_vendor(name, avail, test):
-    print("<b>"+name+" </b><p>  "+("unsure" if test is not True else str(avail))+"</p><br>")
+    print("<b>"+name+" </b>", end='')
+    if test is not True:
+        print("<p style='color: yellow'>not sure</p>")
+    elif avail is True:
+        print("<p style='color: green'>AVAILABLE</p>")
+    else:
+        print("<p style='color: red'>nope</p>")
 
 print_html_header()
-print_html_for_vendor("Amazon", avail_amazon, avail_amazon_positive)
-print_html_for_vendor("Media Markt", avail_mm, avail_mm_positive)
-print_html_for_vendor("Saturn", avail_saturn, avail_saturn_positive)
-print_html_for_vendor("Lidl", avail_lidl, avail_lidl_positive)
-print_html_for_vendor("Otto", avail_otto, avail_otto_positive)
-print_html_for_vendor("Conrad", avail_conrad, avail_conrad_positive)
+print_html_for_vendor("<a href="+amazon_url+">Amazon</a>", avail_amazon, avail_amazon_positive)
+print_html_for_vendor("<a href="+mm_url+">Media Markt</a>", avail_mm, avail_mm_positive)
+print_html_for_vendor("<a href="+saturn_url+">Saturn</a>", avail_saturn, avail_saturn_positive)
+print_html_for_vendor("<a href="+lidl_url+">LIDL</a>", avail_lidl, avail_lidl_positive)
+print_html_for_vendor("<a href="+otto_url+">Otto</a>", avail_otto, avail_otto_positive)
+print_html_for_vendor("<a href="+conrad_url+">Conrad</a>", avail_conrad, avail_conrad_positive)
 print_html_footer()
 
 display.stop()

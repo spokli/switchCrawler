@@ -6,5 +6,6 @@ Run the python script and write the output to a html file:
 
 ## Arguments
 
-- --withtest Runs additional 'positive tests' on available products to check if the crawler works for them. Slows the script down.
-- --stores "amazon mm saturn lidl otto conrad" Add or remove single stores. Default is 'all'
+- `--withtest` Runs additional 'positive tests' on available products to check if the crawler works for them. Slows the script down.
+- `--stores all amazon mm saturn lidl otto conrad` Add or remove single stores. Default is 'all'
+- `--visible` run the script in a visible browser window

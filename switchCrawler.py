@@ -14,21 +14,24 @@ import argparse
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--stores', dest='stores', default='all', help="name of stores to check. 'all' for all")
 parser.add_argument('--withtest', action='store_true', help="set this if positive tests should be done for available products")
+parser.add_argument('--visible', action='store_true', help="set this if the process should run in a visible window")
 
 args = parser.parse_args()
 stores = args.stores
 withtest = args.withtest
+visible = args.visible
 
 check_positive = withtest
 
 # Start virtual display
-display = Display(visible=0, size=(1920, 1080))  
+display = Display(visible=(1 if visible else 0), size=(1920, 1080))  
 display.start()
 
 chrome_options = Options()
 #chrome_options.add_argument("--disable-extensions")
 chrome_options.add_argument("--disable-gpu") 
-chrome_options.add_argument("--headless")
+if not visible:
+    chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920,1080")
 
 
@@ -57,7 +60,7 @@ def check_general(url,
     try:
 
         # Create driver
-        driver = webdriver.Chrome('/home/marco/selenium/chromedriver', options=chrome_options)
+        driver = webdriver.Chrome('./chromedriver', options=chrome_options)
         
         # Call website
         driver.get(url)
@@ -186,7 +189,7 @@ if 'mm' in stores or 'all' in stores:
         url=mm_url_grey,
         availability_text="Online leider nicht mehr verfügbar",
         button_search_criterion='class', 
-        button_search_value="IRVNX",
+        button_search_value="bBMQBs",
         scroll_down=True,
         cart_url="https://www.mediamarkt.de/checkout")
 
